@@ -25,12 +25,17 @@ docker build -t ecs-dns-updater container
 Create an IAM role for use by `ecs-dns-updater` using the
 IAM policy defined in iam/ecs-dns-updater-policy.json and the
 trust policy defined in iam/ecs-task-trust-policy.json.
+If you are likely to have multiple tasks requiring various
+further permissions, create a managed policy and then
+attach that to the required roles.
 
 The policy is fairly simple, it needs to be able to look up
 information about the container, the underlying instance and
 the host and zone information from route53.
 
 ## Creating a service that updates DNS
+
+### Create the task definition
 
 The container definitions for a service using ecs-dns-updater would
 look a little like:
@@ -55,6 +60,11 @@ containerDefinitions:
 Using `essential: false` will mean that the task runs at service start up, stops, and
 is then never restarted until the service restarts (typically because the agent
 underneath has moved)
+
+### Create the service
+
+Provide the task definition from the previous step, as well as the ecs-dns-updater IAM
+role (or another suitable role containing the relevant permissions)
 
 # Acknowledgments
 
