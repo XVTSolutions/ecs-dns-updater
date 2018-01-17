@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeInstances",
+        "ecs:DescribeContainerInstances",
+        "route53:ListHostedZonesByName",
+        "route53:ChangeResourceRecordSets"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
